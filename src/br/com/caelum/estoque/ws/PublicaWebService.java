@@ -6,11 +6,12 @@ public class PublicaWebService {
 
 	public static void main(String[] args) {
 		
-		EstoqueWS service = new EstoqueWS();
-		String url = "http://localhost:8080/estoquews";
-		
-		System.out.println("Service rodando " + url + "?wsdl");
-		
-		Endpoint.publish(url, service);
+        EstoqueWS implementacaoWS = new EstoqueWS();
+        String URL = "http://localhost:8080/estoquews";
+
+        System.out.println("EstoqueWS rodando: " + URL);
+
+        //associando URL com implementacao
+        Endpoint.publish(URL, implementacaoWS);
 	}
 }
