@@ -32,7 +32,9 @@ public class EstoqueWS {
     }
 	
     @WebMethod(operationName="CadastrarItem") 
-    public Item cadastrarItem(@WebParam(name="tokenUsuario", header=true) TokenUsuario token, @WebParam(name="item") Item item) throws AutorizacaoException {
+    public Item cadastrarItem(
+    		@WebParam(name="tokenUsuario", header=true) TokenUsuario token, 
+    		@WebParam(name="item") Item item) throws AutorizacaoException {
 
         System.out.println("Cadastrando " + item + ", " + token);
 
