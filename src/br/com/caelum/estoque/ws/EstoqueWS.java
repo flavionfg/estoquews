@@ -6,6 +6,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.jws.soap.SOAPBinding.ParameterStyle;
+import javax.jws.soap.SOAPBinding.Style;
 
 import br.com.caelum.estoque.exception.AutorizacaoException;
 import br.com.caelum.estoque.modelo.item.Filtro;
@@ -18,6 +21,7 @@ import br.com.caelum.estoque.modelo.usuario.TokenDao;
 import br.com.caelum.estoque.modelo.usuario.TokenUsuario;
 
 @WebService
+@SOAPBinding(style=Style.DOCUMENT,parameterStyle=ParameterStyle.BARE)
 public class EstoqueWS {
 	
 	private ItemDao dao = new ItemDao();
