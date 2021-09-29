@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ListaItens {
+	
 	@XmlElement(name="item")
 	private List<Item> itens;
 
