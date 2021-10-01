@@ -6,23 +6,20 @@
 
       <xs:element name="AutorizacaoFault" nillable="true" type="xs:string"/>
 
-      <xs:element name="CadastrarItem" type="tns:CadastrarItem"/>
-
-      <xs:element name="CadastrarItemResponse" type="tns:CadastrarItemResponse"/>
-
       <xs:element name="filtros" type="tns:filtros"/>
+
+      <xs:element name="item" nillable="true" type="tns:item"/>
+
+      <xs:element name="itens" nillable="true" type="tns:listaItens"/>
 
       <xs:element name="listaItens" type="tns:listaItens"/>
 
-      <xs:element name="todosOsItens" type="tns:todosOsItens"/>
-
-      <xs:element name="todosOsItensResponse" type="tns:todosOsItensResponse"/>
-
       <xs:element name="tokenUsuario" nillable="true" type="tns:tokenUsuario"/>
 
-      <xs:complexType name="CadastrarItem">
+      <xs:complexType name="tokenUsuario">
         <xs:sequence>
-          <xs:element name="item" type="tns:item" minOccurs="0"/>
+          <xs:element name="token" type="xs:string"/>
+          <xs:element name="dataValidade" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
 
@@ -32,25 +29,6 @@
           <xs:element name="nome" type="xs:string"/>
           <xs:element name="tipo" type="xs:string"/>
           <xs:element name="quantidade" type="xs:int"/>
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:complexType name="tokenUsuario">
-        <xs:sequence>
-          <xs:element name="token" type="xs:string"/>
-          <xs:element name="dataValidade" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:complexType name="CadastrarItemResponse">
-        <xs:sequence>
-          <xs:element name="return" type="tns:item" minOccurs="0"/>
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:complexType name="todosOsItens">
-        <xs:sequence>
-          <xs:element name="filtros" type="tns:filtros" minOccurs="0"/>
         </xs:sequence>
       </xs:complexType>
 
@@ -64,12 +42,6 @@
         <xs:sequence>
           <xs:element name="nome" type="xs:string" minOccurs="0"/>
           <xs:element name="tipo" type="tns:tipoItem" minOccurs="0"/>
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:complexType name="todosOsItensResponse">
-        <xs:sequence>
-          <xs:element name="itens" type="tns:listaItens" minOccurs="0"/>
         </xs:sequence>
       </xs:complexType>
 
@@ -89,24 +61,24 @@
 </xs:schema>
   </types>
   <message name="CadastrarItem">
-    <part name="parameters" element="tns:CadastrarItem"/>
     <part name="tokenUsuario" element="tns:tokenUsuario"/>
+    <part name="item" element="tns:item"/>
   </message>
   <message name="CadastrarItemResponse">
-    <part name="result" element="tns:CadastrarItemResponse"/>
+    <part name="item" element="tns:item"/>
   </message>
   <message name="AutorizacaoFault">
     <part name="fault" element="tns:AutorizacaoFault"/>
   </message>
   <message name="todosOsItens">
-    <part name="parameters" element="tns:todosOsItens"/>
+    <part name="filtros" element="tns:filtros"/>
   </message>
   <message name="todosOsItensResponse">
-    <part name="parameters" element="tns:todosOsItensResponse"/>
+    <part name="itens" element="tns:itens"/>
   </message>
   <portType name="EstoqueWS">
-    <operation name="CadastrarItem" parameterOrder="parameters tokenUsuario">
-      <input wsam:Action="http://ws.estoque.caelum.com.br/EstoqueWS/CadastrarItemRequest" message="tns:CadastrarItem"/>
+    <operation name="CadastrarItem" parameterOrder="tokenUsuario item">
+      <input wsam:Action="CadastrarItem" message="tns:CadastrarItem"/>
       <output wsam:Action="http://ws.estoque.caelum.com.br/EstoqueWS/CadastrarItemResponse" message="tns:CadastrarItemResponse"/>
       <fault message="tns:AutorizacaoFault" name="AutorizacaoFault" wsam:Action="http://ws.estoque.caelum.com.br/EstoqueWS/CadastrarItem/Fault/AutorizacaoException"/>
     </operation>
@@ -118,9 +90,9 @@
   <binding name="EstoqueWSPortBinding" type="tns:EstoqueWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <operation name="CadastrarItem">
-      <soap:operation soapAction=""/>
+      <soap:operation soapAction="CadastrarItem"/>
       <input>
-        <soap:body use="literal" parts="parameters"/>
+        <soap:body use="literal" parts="item"/>
         <soap:header message="tns:CadastrarItem" part="tokenUsuario" use="literal"/>
       </input>
       <output>
